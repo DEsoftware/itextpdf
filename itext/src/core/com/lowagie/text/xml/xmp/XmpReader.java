@@ -83,6 +83,11 @@ public class XmpReader {
 	public XmpReader(byte[] bytes) throws SAXException, IOException {
 		try {
 	        DocumentBuilderFactory fact = DocumentBuilderFactory.newInstance();
+			
+			//BEGIN DE-Patch
+			fact.setXIncludeAware(false);
+			//END DE-Patch
+			
 	        fact.setNamespaceAware(true);
 			DocumentBuilder db = fact.newDocumentBuilder();
 	        ByteArrayInputStream bais = new ByteArrayInputStream(bytes);

@@ -138,6 +138,11 @@ public class XfaForm {
         }
         bout.close();
         DocumentBuilderFactory fact = DocumentBuilderFactory.newInstance();
+		
+		//BEGIN DE-Patch
+		fact.setXIncludeAware(false);
+		//END DE-Patch
+		
         fact.setNamespaceAware(true);
         DocumentBuilder db = fact.newDocumentBuilder();
         domDocument = db.parse(new ByteArrayInputStream(bout.toByteArray()));   

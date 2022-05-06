@@ -79,7 +79,14 @@ public class XmlParser {
     
     public XmlParser() {
         try {
-            parser = SAXParserFactory.newInstance().newSAXParser();
+			
+			//BEGIN DE-Patch
+			SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
+			
+			saxParserFactory.setXIncludeAware(false);	
+			
+            parser = saxParserFactory.newSAXParser();
+			//END DE-Patch
         }
         catch(ParserConfigurationException pce) {
             throw new ExceptionConverter(pce);

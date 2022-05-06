@@ -206,8 +206,17 @@ public class TagMap extends HashMap {
     }
 
     protected void init(InputStream in) {
-        try {
-            SAXParser parser = SAXParserFactory.newInstance().newSAXParser();
+        try 
+		{
+			//BEGIN DE-Patch
+			SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
+			
+			saxParserFactory.setXIncludeAware(false);
+			
+            SAXParser parser = saxParserFactory.newSAXParser();
+			//END DE-Patch
+			
+			
             parser.parse(new InputSource(in), new AttributeHandler(this));
         }
         catch(Exception e) {

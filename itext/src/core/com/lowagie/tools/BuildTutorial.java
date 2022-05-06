@@ -171,6 +171,14 @@ public class BuildTutorial {
 		try {
 			// Create transformer factory
 			TransformerFactory factory = TransformerFactory.newInstance();
+			try {
+                factory.setAttribute("http://javax.xml.XMLConstants/property/accessExternalDTD", "");
+            } catch (Exception e) {
+            }
+            try {
+                factory.setAttribute("http://javax.xml.XMLConstants/property/accessExternalStylesheet", "");
+            } catch (Exception e) {
+            }
 
 			// Use the factory to create a template containing the xsl file
 			Templates template = factory.newTemplates(new StreamSource(
