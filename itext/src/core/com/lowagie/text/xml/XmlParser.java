@@ -60,6 +60,7 @@ import javax.xml.parsers.SAXParserFactory;
 
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+import org.xml.sax.XMLReader;
 
 import com.lowagie.text.DocListener;
 import com.lowagie.text.ExceptionConverter;
@@ -84,8 +85,16 @@ public class XmlParser {
 			SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
 			
 			saxParserFactory.setFeature("http://xml.org/sax/features/external-general-entities", false);
+			saxParserFactory.setXIncludeAware(false);
+			saxParserFactory.setFeature("http://apache.org/xml/features/xinclude", false);
 			
-            SAXParser parser = saxParserFactory.newSAXParser();
+			SAXParser parser = saxParserFactory.newSAXParser();
+			
+			final XMLReader reader = parser.getXMLReader();
+			
+			reader.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
+			reader.setFeature("http://xml.org/sax/features/external-general-entities", false);
+			reader.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
 			//END DE-Patch
         }
         catch(ParserConfigurationException pce) {

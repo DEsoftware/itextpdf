@@ -60,6 +60,7 @@ import javax.xml.parsers.SAXParserFactory;
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
 import org.xml.sax.helpers.DefaultHandler;
+import org.xml.sax.XMLReader;
 
 import com.lowagie.text.ExceptionConverter;
 
@@ -212,12 +213,20 @@ public class TagMap extends HashMap {
 			SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
 			
 			saxParserFactory.setFeature("http://xml.org/sax/features/external-general-entities", false);
+			saxParserFactory.setXIncludeAware(false);
+			saxParserFactory.setFeature("http://apache.org/xml/features/xinclude", false);
 			
-            SAXParser parser = saxParserFactory.newSAXParser();
+			SAXParser parser = saxParserFactory.newSAXParser();
+			
+			final XMLReader reader = parser.getXMLReader();
+			
+			reader.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
+			reader.setFeature("http://xml.org/sax/features/external-general-entities", false);
+			reader.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
 			//END DE-Patch
 			
 			
-            parser.parse(new InputSource(in), new AttributeHandler(this));
+			parser.parse(new InputSource(in), new AttributeHandler(this));
         }
         catch(Exception e) {
             throw new ExceptionConverter(e);
