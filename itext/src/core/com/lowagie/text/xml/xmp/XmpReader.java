@@ -85,7 +85,25 @@ public class XmpReader {
 	        DocumentBuilderFactory fact = DocumentBuilderFactory.newInstance();
 			
 			//BEGIN DE-Patch
-			fact.setXIncludeAware(false);
+			String FEATURE = null;
+			try {
+				FEATURE = "http://apache.org/xml/features/disallow-doctype-decl";
+				fact.setFeature(FEATURE, true);
+
+				FEATURE = "http://xml.org/sax/features/external-general-entities";
+				fact.setFeature(FEATURE, false);
+
+				FEATURE = "http://xml.org/sax/features/external-parameter-entities";
+				fact.setFeature(FEATURE, false);
+
+				FEATURE = "http://apache.org/xml/features/nonvalidating/load-external-dtd";
+				fact.setFeature(FEATURE, false);
+
+				fact.setXIncludeAware(false);
+				fact.setExpandEntityReferences(false);
+			} catch (Exception e) {
+				throw new ExceptionConverter(e);
+			}
 			//END DE-Patch
 			
 	        fact.setNamespaceAware(true);

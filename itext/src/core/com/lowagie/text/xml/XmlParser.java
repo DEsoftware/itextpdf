@@ -83,9 +83,9 @@ public class XmlParser {
 			//BEGIN DE-Patch
 			SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
 			
-			saxParserFactory.setXIncludeAware(false);	
+			saxParserFactory.setFeature("http://xml.org/sax/features/external-general-entities", false);
 			
-            parser = saxParserFactory.newSAXParser();
+            SAXParser parser = saxParserFactory.newSAXParser();
 			//END DE-Patch
         }
         catch(ParserConfigurationException pce) {

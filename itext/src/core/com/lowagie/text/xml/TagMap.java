@@ -211,7 +211,7 @@ public class TagMap extends HashMap {
 			//BEGIN DE-Patch
 			SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
 			
-			saxParserFactory.setXIncludeAware(false);
+			saxParserFactory.setFeature("http://xml.org/sax/features/external-general-entities", false);
 			
             SAXParser parser = saxParserFactory.newSAXParser();
 			//END DE-Patch
