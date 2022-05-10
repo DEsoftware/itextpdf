@@ -1,0 +1,20 @@
+
+-classpath: @@@itext.jar@@@
+-output: @@@itext-bundle.jar@@@
+Implementation-Title: IText PDF Library
+Implementation-Version: @@@releasenumber@@@
+Implementation-Vendor: itextpdf.com
+
+Bundle-Name: IText PDF Library
+Bundle-Vendor: itextpdf.com
+Bundle-Version: @@@releasenumber@@@
+Bundle-DocURL: https://github.com/itext/itextpdf
+Bundle-SymbolicName: iText
+
+Export-Package: \
+com.lowagie*
+
+Import-Package: \
+    *;resolution:="optional"
+	
+

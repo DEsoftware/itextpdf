@@ -35,6 +35,7 @@
         <echo>ant jar.rups: compiles and jars iText RUPS</echo>
         <echo />
 	</target>
+	
 
     <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
     <!-- Compiling the code                                               -->
@@ -104,12 +105,25 @@
             </manifest>
         </jar>
     </target>
+		
+    <target name="bundle" depends="make.jar" description="--> makes from the jar an OSGI bundle">
+		<!-- Replace placeholders in core.bnd with ant properties for bnd into core-eff.bnd -->
+		<copy file="${itext.src}/core.bnd" tofile="${itext.build}/core-eff.bnd" overwrite="true"/>		
+		<replace file="${itext.build}/core-eff.bnd" token="@@@itext.jar@@@" value="../lib/iText.jar"/>
+		<replace file="${itext.build}/core-eff.bnd" token="@@@itext-bundle.jar@@@" value="${itext.build}/iText-${releasenumber}.jar"/>
+		<replace file="${itext.build}/core-eff.bnd" token="@@@releasenumber@@@" value="${releasenumber}"/>
+		
+		<java jar="${itext.home}/lib/biz.aQute.bnd-5.2.0.jar" fork="true" dir="${itext.src}">
+		    <arg file="${itext.build}/core-eff.bnd"/>
+		</java>
+	</target>
+		
 
     <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
     <!-- Compiling and Jarring the code                                   -->
 	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 	
-    <target name="jar"  depends="compile, make.jar" description="--> makes a jarfile from the iText code" />
+    <target name="jar"  depends="compile, make.jar, bundle" description="--> makes a jarfile from the iText code" />
     
     <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
     <!-- Jarring the rtf code                                             -->
